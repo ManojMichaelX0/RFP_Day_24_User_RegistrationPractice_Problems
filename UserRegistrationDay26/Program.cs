@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Text.RegularExpressions;
 
 namespace UserRegistrationDay26
@@ -11,148 +12,70 @@ namespace UserRegistrationDay26
             Invalid_FirstName, Invalid_LastName, Invalid_Email, Invalid_MobileNumber, Invalid_Password
         }
         private readonly ExceptionType type;
+
         public static void Main(string[] args)
         {
             Console.WriteLine("User Registration");
-            Console.WriteLine("UC 1 Enter First Name");
-            firstName = Console.ReadLine();
-            FirstNameCheck(firstName);
-            Console.WriteLine("UC 2 Enter Last Name");
-            lastName = Console.ReadLine();
-            LastNameCheck(lastName);
-            Console.WriteLine("UC 3 and 9 Enter Email");
-            email = Console.ReadLine();
-            EmailCheck(email);
-            Console.WriteLine("UC 4 Enter Mobile Number ");
-            mobileNumber = Console.ReadLine();
-            MobileNumberCheck(mobileNumber);
-            Console.WriteLine("UC 5 to 8 Enter Password");
-            password = Console.ReadLine();
-            PasswordCheck(password);
+            //UC 13
+            AddRecords();
+           
 
         }
-        //UC 1 First Name
-        public static bool FirstNameCheck(string fname)
+        public static void AddRecords()
         {
-            try
+            Console.WriteLine("Enter First Name, Last Name,Email, MobileNumber,Password");
+            string firstname=Console.ReadLine();
+            string lastname=Console.ReadLine();
+            string email=Console.ReadLine();
+            string mobileNumber=Console.ReadLine();
+            string password=Console.ReadLine();
+            Console.WriteLine("First Name Check");
+            Check(firstname);
+            Console.WriteLine("Last Name Check");
+            Check(lastname);
+            Console.WriteLine("Email Check");
+            Check(email);
+            Console.WriteLine("Mobile Check");
+            Check(mobileNumber);
+            Console.WriteLine("Password Check");
+            Check(password);
+
+
+            void Check(string value)
             {
-                var result = Regex.Match(fname, "^[A-Z][a-z]{3,}$").Success;
-                if (result)
+                Regex firstAndLastName = new Regex("^[A-Z][a-z]{3,}$");
+                Regex emailcheck = new Regex(@"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$");
+                Regex mobileNumbercheck = new Regex(@"^([0-9]{2})\s([0-9]{10})$");
+                Regex passwordCheck = new Regex(@"^([A-Za-z]{7,})([`~!@#$%^&*()_+=:;.,'<>/|\?]{1})([0-9]{1,})$");
+                if (firstAndLastName.Match(value).Success)
                 {
                     Console.WriteLine("Success");
-                    return true;
+                }
+                else if (firstAndLastName.Match(value).Success)
+                {
+                    Console.WriteLine("Success");
+                }
+                else if (emailcheck.Match(value).Success)
+                {
+                    Console.WriteLine("Success");
+                }
+                else if (mobileNumbercheck.Match(value).Success)
+                {
+                    Console.WriteLine("Success");
+                }
+                else if (passwordCheck.Match(value).Success)
+                {
+                    Console.WriteLine("Success");
                 }
                 else
                 {
                     Console.WriteLine("Failed");
-                    return false;
                 }
             }
-            catch
-            {
-                throw new Program(Program.ExceptionType.Invalid_FirstName, "Invalid First Name");
-            }
-
+          
         }
 
-        //UC 2 Last Name
-        public static bool LastNameCheck(string lname)
-        {
-            try
-            {
-                var result = Regex.Match(lname, "^[A-Z][a-z]{3,}$").Success;
-                if (result)
-                {
-                    Console.WriteLine("Success");
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("Failed");
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                throw new Program(Program.ExceptionType.Invalid_FirstName, "Invalid Last Name");
-            }
 
-        }
-        //UC 3 and 9 Email
-        public static bool EmailCheck(string mail)
-        {
-            try
-            {
-                var result = Regex.Match(mail, @"^([\w-\.]+)@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.)|(([\w-]+\.)+))([a-zA-Z]{2,4}|[0-9]{1,3})(\]?)$").Success;
-                if (result)
-                {
-                    Console.WriteLine("Success");
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("Failed");
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                throw new Program(Program.ExceptionType.Invalid_FirstName, "Invalid Email");
-            }
-        }
-        //UC 4 Mobile Number
-        public static bool MobileNumberCheck(string mobileNumber)
-        {
-            try
-            {
-                var result = Regex.Match(mobileNumber, @"^([0-9]{2})\s([0-9]{10})$").Success;
-                if (result)
-                {
-                    Console.WriteLine("Success");
-                    return true;
-                }
-                else
-                {
-                    Console.WriteLine("Failed");
-                    return false;
-                }
-            }
-            catch (Exception)
-            {
-                throw new Program(Program.ExceptionType.Invalid_FirstName, "Invalid Mobile Number");
-            }
 
-        }
-        //UC 5 Password
-        public static bool PasswordCheck(string password)
-        {
-            try
-            {
-            var result = Regex.Match(password, @"^([A-Za-z]{5,})([`~!@#$%^&*()_+=:;.,'<>/|\?]{1})([0-9]{1,})$").Success;
-            if (result)
-            {
-                Console.WriteLine("Success");
-                return true;
-            }
-            else
-            {
-                Console.WriteLine("Failed");
-                return false;
-            }
-            }
-            catch (Exception)
-            {
-                throw new Program(Program.ExceptionType.Invalid_FirstName, "Invalid PassWord");
-            }
-
-        }
-
-        //UC 10
-
-        public Program(ExceptionType type, string message) : base(message)
-        {
-            this.type = type;
-        }
     }
-
 }
